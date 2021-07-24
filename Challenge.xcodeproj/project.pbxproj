@@ -29,6 +29,9 @@
 		09690DAA26A08FCF0003FDC2 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09690DA926A08FCF0003FDC2 /* Extension.swift */; };
 		09690DCC26A166B00003FDC2 /* SearchResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09690DCB26A166B00003FDC2 /* SearchResultController.swift */; };
 		09690DCE26A16CAB0003FDC2 /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09690DCD26A16CAB0003FDC2 /* SearchResultCell.swift */; };
+		096A5DA026AAACC900BCD743 /* DropDownFloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096A5D9F26AAACC900BCD743 /* DropDownFloatingView.swift */; };
+		096A5DA226AAAD2800BCD743 /* DropDownTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096A5DA126AAAD2800BCD743 /* DropDownTableView.swift */; };
+		096A5DA426AAAD7000BCD743 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096A5DA326AAAD7000BCD743 /* CustomCell.swift */; };
 		1789B3D6E06E3C5B13E51519 /* Pods_Challenge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F4A43DFC99F91338F9A2C57 /* Pods_Challenge.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +61,9 @@
 		09690DA926A08FCF0003FDC2 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		09690DCB26A166B00003FDC2 /* SearchResultController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultController.swift; sourceTree = "<group>"; };
 		09690DCD26A16CAB0003FDC2 /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
+		096A5D9F26AAACC900BCD743 /* DropDownFloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownFloatingView.swift; sourceTree = "<group>"; };
+		096A5DA126AAAD2800BCD743 /* DropDownTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownTableView.swift; sourceTree = "<group>"; };
+		096A5DA326AAAD7000BCD743 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		0B0E8AE0040FB34B556DA093 /* Pods-Challenge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Challenge.debug.xcconfig"; path = "Target Support Files/Pods-Challenge/Pods-Challenge.debug.xcconfig"; sourceTree = "<group>"; };
 		9F4A43DFC99F91338F9A2C57 /* Pods_Challenge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Challenge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -141,6 +147,9 @@
 				09690D9A269F2A020003FDC2 /* BaseSearchCell.swift */,
 				09690D9E269F541C0003FDC2 /* OfficialAppCell.swift */,
 				09690DCD26A16CAB0003FDC2 /* SearchResultCell.swift */,
+				096A5D9F26AAACC900BCD743 /* DropDownFloatingView.swift */,
+				096A5DA126AAAD2800BCD743 /* DropDownTableView.swift */,
+				096A5DA326AAAD7000BCD743 /* CustomCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -302,6 +311,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				09690D2F269DEC1D0003FDC2 /* UIView+Layout.swift in Sources */,
+				096A5DA026AAACC900BCD743 /* DropDownFloatingView.swift in Sources */,
+				096A5DA426AAAD7000BCD743 /* CustomCell.swift in Sources */,
 				09690D24269DDC3E0003FDC2 /* BaseTabBarController.swift in Sources */,
 				09690DA526A02D330003FDC2 /* Service.swift in Sources */,
 				09690DA226A028C20003FDC2 /* AppResult.swift in Sources */,
@@ -310,6 +321,7 @@
 				09690D9B269F2A020003FDC2 /* BaseSearchCell.swift in Sources */,
 				09690D9D269F4F590003FDC2 /* OfficialAppController.swift in Sources */,
 				09690D2C269DE76F0003FDC2 /* SearchCategoryCell.swift in Sources */,
+				096A5DA226AAAD2800BCD743 /* DropDownTableView.swift in Sources */,
 				09690D27269DE4D80003FDC2 /* CategorySearchController.swift in Sources */,
 				09690DCE26A16CAB0003FDC2 /* SearchResultCell.swift in Sources */,
 				09690DAA26A08FCF0003FDC2 /* Extension.swift in Sources */,

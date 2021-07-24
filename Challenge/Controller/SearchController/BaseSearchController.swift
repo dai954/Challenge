@@ -31,7 +31,6 @@ class BaseSearchController: BaseListController, UICollectionViewDelegateFlowLayo
         Searvice.shared.setupAddButton(addTo: view)
         fetchData()
     }
-
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         navigationController?.pushViewController(TagSearchController(), animated: true)
