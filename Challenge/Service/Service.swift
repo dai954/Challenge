@@ -8,11 +8,33 @@
 import Foundation
 import UIKit
 
-class Searvice {
+class Service {
     
-    static let shared = Searvice()
+    static let shared = Service()
     
-    func fetchJsonData(urlString: String, completion: @escaping (AppResult?, Error?) -> Void) {
+//    func fetchJsonData(urlString: String, completion: @escaping (AppResult?, Error?) -> Void) {
+//
+//        guard let url = URL(string: urlString) else { return }
+//        URLSession.shared.dataTask(with: url) { data, resp, err in
+//            if let err = err {
+//                print("Faild to fetch data", err)
+//                completion(nil, err)
+//            }
+//
+//            guard let data = data else { return }
+//
+//            do {
+//            let appResults = try JSONDecoder().decode(AppResult.self, from: data)
+//                completion(appResults, nil)
+//            } catch let JSONErr {
+//                print("Faild to decode data", JSONErr)
+//                completion(nil, err)
+//            }
+//        }.resume()
+//        
+//    }
+    
+    func fetchJsonData<T: Decodable>(urlString: String, completion: @escaping (T?, Error?) -> Void) {
         
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { data, resp, err in
@@ -24,7 +46,7 @@ class Searvice {
             guard let data = data else { return }
             
             do {
-            let appResults = try JSONDecoder().decode(AppResult.self, from: data)
+            let appResults = try JSONDecoder().decode(T.self, from: data)
                 completion(appResults, nil)
             } catch let JSONErr {
                 print("Faild to decode data", JSONErr)
@@ -51,7 +73,5 @@ class Searvice {
         view.addSubview(addButton)
         addButton.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 16, right: 6))
     }
-    
-    
     
 }

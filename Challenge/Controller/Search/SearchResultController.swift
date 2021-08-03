@@ -12,27 +12,32 @@ class SearchResultController: BaseListController, UICollectionViewDelegateFlowLa
 
     let cellId = "cellId"
     var dropDownFloatingView = DropDownFloatingView()
+    var searchTerm = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        For third VC, it should be set here.
+        if #available(iOS 14.0, *) {
+          navigationItem.backButtonDisplayMode = .minimal
+        }
+        else {
+          navigationItem.backButtonTitle = ""
+        }
+        
         collectionView.backgroundColor = #colorLiteral(red: 0.9410743117, green: 0.9412353635, blue: 0.9410640597, alpha: 1)
-        Searvice.shared.setupAddButton(addTo: view)
+        Service.shared.setupAddButton(addTo: view)
         
         collectionView.register(SearchResultCell.self, forCellWithReuseIdentifier: cellId)
         
-        dropDownFloatingView = DropDownFloatingView.init(frame: .init(x: 0, y: 0, width: 0, height: 0))
-        dropDownFloatingView.detailSearchViewHeight = self.detailSearchViewHeight
+        setupFloatingView()
         
-        calculateTableViewContentHeight(dropDownFloatingView: dropDownFloatingView)
-        view.addSubview(dropDownFloatingView)
-        
-        dropDownFloatingView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(width: 0, height: detailSearchViewHeight))
-        
+        fetchData()
     }
+    
     
     var dummyTableView = DropDownTableView()
     
-    func calculateTableViewContentHeight(dropDownFloatingView:  DropDownFloatingView) {
+    fileprivate func calculateTableViewContentHeight(dropDownFloatingView:  DropDownFloatingView) {
         dummyTableView = DropDownTableView.init(frame: .init(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         view.addSubview(dummyTableView)
         
@@ -51,6 +56,15 @@ class SearchResultController: BaseListController, UICollectionViewDelegateFlowLa
         }
     }
     
+    fileprivate func setupFloatingView() {
+        dropDownFloatingView = DropDownFloatingView.init(frame: .init(x: 0, y: 0, width: 0, height: 0))
+        dropDownFloatingView.detailSearchViewHeight = self.detailSearchViewHeight
+        calculateTableViewContentHeight(dropDownFloatingView: dropDownFloatingView)
+        view.addSubview(dropDownFloatingView)
+        
+        dropDownFloatingView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(width: 0, height: detailSearchViewHeight))
+    }
+    
     override func viewDidLayoutSubviews() {
         dummyTableView.removeFromSuperview()
         dropDownFloatingView.safeAreaTop = self.view.safeAreaInsets.top
@@ -58,14 +72,33 @@ class SearchResultController: BaseListController, UICollectionViewDelegateFlowLa
     }
     
     
-    //MARK: - Controll CollectionViewCell
+    //MARK: - Controll CollectionViewCell with Web API
+    var apps = [App]()
+    
+    func fetchData() {
+        let itemEncodeString = searchTerm.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        let urlString = "https://itunes.apple.com/search?term=\(itemEncodeString)&country=JP&entity=software"
+        Service.shared.fetchJsonData(urlString: urlString) { (res: SearchResult? , error: Error?) in
+            if let err = error {
+                print("Faild to fetch search data", err)
+            }
+            self.apps = res?.results ?? []
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+            
+        }
+        
+    }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        dropDownFloatingView.teamNumberlabel.text = "\(apps.count)チーム募集中"
+        return apps.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchResultCell
+        cell.app = apps[indexPath.item]
         return cell
     }
     
@@ -75,6 +108,12 @@ class SearchResultController: BaseListController, UICollectionViewDelegateFlowLa
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return .init(top: detailSearchViewHeight + 10, left: 0, bottom: 10, right: 0)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let appId = String(apps[indexPath.item].trackId)
+        let detailViewController = DetailViewController(appId: appId)
+        navigationController?.pushViewController(detailViewController, animated: true)
     }
     
     

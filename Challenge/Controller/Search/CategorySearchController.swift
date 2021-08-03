@@ -33,10 +33,9 @@ class CategorySearchController: BaseListController, UICollectionViewDelegateFlow
         return CategorySearchController.labelData.count
     }
     
-    var handlePushView: (()->Void)?
-    
+    var handlePushView: ((String)->Void)?
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        handlePushView?()
+        handlePushView?(CategorySearchController.labelData[indexPath.item])
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -44,8 +43,7 @@ class CategorySearchController: BaseListController, UICollectionViewDelegateFlow
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchCategoryCell
         cell.categoryLabel.text = CategorySearchController.labelData[indexPath.item]
         return cell
-        
-        
+    
     }
     
     let spacing: CGFloat = 10

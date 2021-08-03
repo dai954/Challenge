@@ -39,6 +39,13 @@ class DropDownFloatingView: UIView, DismissDetailSearch {
         return imageView
     }()
     
+    let bottomBorder: UIView = {
+        let border = UIView()
+        border.backgroundColor = .lightGray
+        border.alpha = 0
+        return border
+    }()
+    
     let blindView = BlindView()
     
     override init(frame: CGRect) {
@@ -53,10 +60,12 @@ class DropDownFloatingView: UIView, DismissDetailSearch {
         
         addSubview(uiViewContainer)
         addSubview(teamNumberlabel)
+        addSubview(bottomBorder)
         
         teamNumberlabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: nil, padding: .init(top: 0, left: 12, bottom: 0, right: 0))
         
         uiViewContainer.anchor(top: topAnchor, leading: nil, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 12), size: .init(width: 72, height: 0))
+        bottomBorder.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, size: .init(width: 0, height: 0.3))
         
         dropView = DropDownTableView.init(frame: .init(x: 0, y: 0, width: 0, height: 0))
         
@@ -88,11 +97,12 @@ class DropDownFloatingView: UIView, DismissDetailSearch {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        let floatingPosition: CGFloat = floatingViewPosition - safeAreaTop - detailSearchViewHeight - 1
+        let floatingPosition: CGFloat = floatingViewPosition - safeAreaTop - detailSearchViewHeight
         print("floatingPosition",floatingPosition)
         
         if isOpen == false {
             isOpen = true
+            bottomBorder.alpha = 1
             
             NSLayoutConstraint.deactivate([self.dropViewHeight, self.dropViewTopAnchor, self.blindViewTopAnchor])
             
@@ -126,6 +136,7 @@ class DropDownFloatingView: UIView, DismissDetailSearch {
     
     func dismissDetailSearchView() {
         isOpen = false
+        bottomBorder.alpha = 0
         NSLayoutConstraint.deactivate([self.dropViewHeight])
         self.dropViewHeight.constant = 0
         NSLayoutConstraint.activate([self.dropViewHeight])

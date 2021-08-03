@@ -7,13 +7,37 @@
 
 import UIKit
 
-class SearchResultCell: UICollectionViewCell {
+class SearchResultCellSample: UICollectionViewCell {
     
-    let blurVisualEffectiveView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+    var app: App! {
+        didSet {
+            teamLabel.text = app.trackName
+            teamImage.sd_setImage(with: URL(string: app.artworkUrl100))
+            teamDescription.text = app.description
+            
+            memberImage1.sd_setImage(with: URL(string: app.screenshotUrls?[0] ?? ""))
+
+            if app.screenshotUrls!.count > 1 {
+                memberImage2.sd_setImage(with: URL(string: app.screenshotUrls![1]))
+            }
+            if app.screenshotUrls!.count > 2 {
+                memberImage3.sd_setImage(with: URL(string: app.screenshotUrls?[2] ?? ""))
+            }
+            if app.screenshotUrls!.count > 3 {
+                memberImage4.sd_setImage(with: URL(string: app.screenshotUrls?[3] ?? ""))
+            }
+            if app.screenshotUrls!.count > 4 {
+                memberImage5.sd_setImage(with: URL(string: app.screenshotUrls?[4] ?? ""))
+            }
+        }
+    }
+    
     
     let teamImage: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .red
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -30,6 +54,7 @@ class SearchResultCell: UICollectionViewCell {
         imageView.widthAnchor.constraint(equalToConstant: imageSize).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: imageSize).isActive = true
         imageView.layer.cornerRadius = imageSize / 2
+        imageView.clipsToBounds = true
         return imageView
     }
     
@@ -69,7 +94,7 @@ class SearchResultCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .yellow
+        backgroundColor = .white
         layer.cornerRadius = 8
         clipsToBounds = true
     
@@ -108,7 +133,7 @@ class SearchResultCell: UICollectionViewCell {
         memberImageStackView.centerInSuperview()
         starImage.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor, padding: .init(top: 8, left: 0, bottom: 0, right: 8),size: .init(width: 20, height: 20))
         teamLabel.textAlignment = .center
-        teamLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 25, left: 20, bottom: 0, right: 20))
+        teamLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 25, left: 64, bottom: 0, right: 64))
         beginerTag.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 4, left: 4, bottom: 0, right: 0), size: .init(width: 80, height: 24))
         beginerTag.layer.cornerRadius = 12
         beginerTag.textAlignment = .center

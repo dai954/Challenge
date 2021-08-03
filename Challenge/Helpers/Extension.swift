@@ -19,14 +19,20 @@ extension UISearchBar {
     }
 }
 
-
 extension UILabel {
     
-    convenience init(text: String, font: UIFont, NumberOfLines: Int = 1) {
+    convenience init(text: String, font: UIFont, numberOfLines: Int = 1) {
         self.init(frame: .zero)
         self.text = text
         self.font = font
         self.numberOfLines = numberOfLines
     }
     
+}
+
+extension UIView {
+    convenience init(color: UIColor) {
+        self.init(frame: .zero)
+        self.backgroundColor = color
+    }
 }

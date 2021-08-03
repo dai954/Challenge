@@ -17,7 +17,6 @@ class BaseSearchController: BaseListController, UICollectionViewDelegateFlowLayo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         collectionView.backgroundColor = #colorLiteral(red: 0.9410743117, green: 0.9412353635, blue: 0.9410640597, alpha: 1)
 //        self.navigationController?.setNavigationBarHidden(true, animated: false)
         
@@ -28,7 +27,7 @@ class BaseSearchController: BaseListController, UICollectionViewDelegateFlowLayo
         searchBar.delegate = self
         
         setupSearchBar()
-        Searvice.shared.setupAddButton(addTo: view)
+        Service.shared.setupAddButton(addTo: view)
         fetchData()
     }
     
@@ -38,7 +37,6 @@ class BaseSearchController: BaseListController, UICollectionViewDelegateFlowLayo
     }
     
     private func setupSearchBar() {
-        searchBar.tintColor = .white
         searchBar.tintColor = .white
         navigationItem.titleView = searchBar
         searchBar.textField?.backgroundColor = .white
@@ -52,7 +50,7 @@ class BaseSearchController: BaseListController, UICollectionViewDelegateFlowLayo
     func fetchData() {
         
         let urlString = "https://rss.itunes.apple.com/api/v1/jp/ios-apps/top-grossing/all/18/explicit.json"
-        Searvice.shared.fetchJsonData(urlString: urlString) { appResults, err in
+        Service.shared.fetchJsonData(urlString: urlString) { (appResults: AppResult?, err) in
             if let err = err {
                 print("Faild to fetch data", err)
             }
@@ -147,8 +145,11 @@ class BaseSearchController: BaseListController, UICollectionViewDelegateFlowLayo
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: firstCellId, for: indexPath) as! SearchFirstCell
-            cell.categorySearchController.handlePushView = { [weak self] in
-                self?.navigationController?.pushViewController(SearchResultController(), animated: true)
+            cell.categorySearchController.handlePushView = { [weak self] searchTerm in
+                let searchResultController = SearchResultController()
+                searchResultController.searchTerm = searchTerm
+                searchResultController.navigationItem.title = "【\(searchTerm)】"
+                self?.navigationController?.pushViewController(searchResultController, animated: true)
             }
             return cell
         } else if indexPath.item == 1 {

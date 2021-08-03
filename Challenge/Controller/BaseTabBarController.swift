@@ -21,6 +21,17 @@ class BaseTabBarController: UITabBarController {
         
     }
     
+//    Change statusBar backgroudColor
+    override func viewDidAppear(_ animated: Bool) {
+        if #available(iOS 13, *)
+        {
+            let statusBar = UIView(frame: (UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.windowScene?.statusBarManager?.statusBarFrame)!)
+            statusBar.backgroundColor = #colorLiteral(red: 0.9353960156, green: 0.2671836317, blue: 0.2663446367, alpha: 1)
+            UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(statusBar)
+        }
+    }
+    
+    
     func createNavigationController(viewController: UIViewController, imageName: String, title: String = "") -> UINavigationController {
         let navController = UINavigationController(rootViewController: viewController)
         navController.navigationBar.barTintColor = #colorLiteral(red: 0.9353960156, green: 0.2671836317, blue: 0.2663446367, alpha: 1)
