@@ -7,43 +7,53 @@
 
 import UIKit
 
-class BaseSearchController: BaseListController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
+class BaseSearchController: BaseListController, UICollectionViewDelegateFlowLayout {
     
     let firstCellId = "firstCellId"
     let secondCellId = "secondCellId"
     let thirdCellId = "thirdCellId"
     
-    let searchBar = UISearchBar()
+    let searchBarView = UISearchBar()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.backgroundColor = #colorLiteral(red: 0.9410743117, green: 0.9412353635, blue: 0.9410640597, alpha: 1)
-//        self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         collectionView.register(SearchFirstCell.self, forCellWithReuseIdentifier: firstCellId)
         collectionView.register(SearchSecondCell.self, forCellWithReuseIdentifier: secondCellId)
         collectionView.register(SearchThirdCell.self, forCellWithReuseIdentifier: thirdCellId)
         
-        searchBar.delegate = self
-        
         setupSearchBar()
+        
         Service.shared.setupAddButton(addTo: view)
         fetchData()
     }
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        navigationController?.pushViewController(TagSearchController(), animated: true)
-        searchBar.textField?.endEditing(true)
-    }
-    
+
     private func setupSearchBar() {
-        searchBar.tintColor = .white
-        navigationItem.titleView = searchBar
-        searchBar.textField?.backgroundColor = .white
-        searchBar.placeholder = "キーワード検索はここをタップ"
-        navigationItem.title = ""
+        //   For next VC, it should be set here.
+        if #available(iOS 14.0, *) {
+            navigationItem.backButtonDisplayMode = .minimal
+        }
+        else {
+            navigationItem.backButtonTitle = ""
+        }
+        
+        searchBarView.tintColor = .white
+        searchBarView.textField?.backgroundColor = .white
+        searchBarView.placeholder = "キーワード検索はここをタップ"
         navigationController?.navigationBar.tintColor = .white
+        searchBarView.textField?.isEnabled = false
+        navigationItem.titleView = searchBarView
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(singleTap))
+
+        searchBarView.addGestureRecognizer(tapGesture)
     }
+    
+    @objc func singleTap() {
+        navigationController?.pushViewController(TagSearchController(collectionViewLayout: LeftAlignedCollectionViewFlowLayout()), animated: true)
+    }
+    
     
     var apps = [Result]()
     
@@ -64,77 +74,6 @@ class BaseSearchController: BaseListController, UICollectionViewDelegateFlowLayo
             
         }
        
-    }
-   
-    class SearchFirstCell: UICollectionViewCell {
-        let categorySearchController = CategorySearchController()
-        override init(frame: CGRect) {
-            super.init(frame: frame)
-            addSubview(categorySearchController.view)
-            categorySearchController.view.fillSuperview(padding: .init(top: 10, left: 10, bottom: 0, right: 10))
-        }
-        
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-    }
-    
-    class SearchSecondCell: UICollectionViewCell {
-        let favoriteButton: UIButton = {
-           let button = UIButton()
-            button.setTitle("お気に入り", for: .normal)
-            button.backgroundColor = .white
-            button.setTitleColor(.black, for: .normal)
-            button.titleLabel?.font = .systemFont(ofSize: 12)
-            button.setImage(#imageLiteral(resourceName: "star"), for: .normal)
-            button.titleEdgeInsets = .init(top: 0, left: 12, bottom: 0, right: 0)
-            button.layer.cornerRadius = 6
-            return button
-        }()
-       
-        let numberOfFavorite = 0
-        
-        override init(frame: CGRect) {
-            super.init(frame: frame)
-            
-            favoriteButton.setTitle("お気に入り\(numberOfFavorite)チーム", for: .normal)
-            
-            addSubview(favoriteButton)
-            favoriteButton.fillSuperview(padding: .init(top: 0, left: 10, bottom: 0, right: 10))
-        }
-        
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-        
-    }
-    
-    class SearchThirdCell: UICollectionViewCell {
-        
-        let officialAppController = OfficialAppController()
-        let titleLabel: UILabel = {
-            let label = UILabel()
-            label.text = "公式チャレンジ"
-            label.font = .systemFont(ofSize: 12)
-            return label
-        }()
-        
-        override init(frame: CGRect) {
-            super.init(frame: frame)
-            
-            layer.cornerRadius = 32
-            clipsToBounds = true
-            titleLabel.textAlignment = .center
-            addSubview(titleLabel)
-            titleLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 24, left: 0, bottom: 0, right: 0))
-            addSubview(officialAppController.view)
-            officialAppController.view.anchor(top: titleLabel.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 20, right: 10))
-            
-        }
-        
-        required init?(coder: NSCoder) {
-            fatalError()
-        }
     }
     
     
@@ -165,13 +104,14 @@ class BaseSearchController: BaseListController, UICollectionViewDelegateFlowLayo
     
     let numberOfSearchCategoryCell = CGFloat(CategorySearchController.labelData.count)
     let firstCellHeight = CategorySearchController.cellHeight
+    let firstCellSpacing = CategorySearchController.spacing
     let thirdCellHeight = OfficialAppController.cellHeight
     let thirdCellInsetWidth = OfficialAppController.insetWidth
     let topBottomInset: CGFloat = 12 + 24 + 10 + 20
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.item == 0 {
-            let height = firstCellHeight * (ceil(numberOfSearchCategoryCell / 2)) + ceil(numberOfSearchCategoryCell / 2) * 10
+            let height = firstCellHeight * (ceil(numberOfSearchCategoryCell / 2)) + ceil(numberOfSearchCategoryCell / 2) * firstCellSpacing
             return .init(width: view.frame.width, height: height)
         } else if indexPath.item == 1 {
             return .init(width: view.frame.width, height: 32)

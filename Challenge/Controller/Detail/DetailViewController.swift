@@ -36,14 +36,14 @@ class DetailViewController: BaseListController, UICollectionViewDelegateFlowLayo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "歩く"
+//        navigationItem.title = "歩く"
         if #available(iOS 14.0, *) {
             navigationItem.backButtonDisplayMode = .minimal
         } else {
             navigationItem.leftBarButtonItem?.title = ""
             navigationItem.backButtonTitle = ""
         }
-        
+
         self.navigationController?.hidesBarsOnSwipe = true
         self.tabBarController?.tabBar.isHidden = true
         
@@ -153,7 +153,6 @@ class DetailViewController: BaseListController, UICollectionViewDelegateFlowLayo
             dummyCell.descriptionLabel.text = app?.description
             dummyCell.layoutIfNeeded()
             let estimatedSize = dummyCell.systemLayoutSizeFitting(.init(width: view.frame.width, height: 1000))
-//            print("estimatedSize.height)",estimatedSize.height)
             return .init(width: view.frame.width - 20, height: estimatedSize.height)
         case 3:
             return .init(width: view.frame.width - 20, height: 400)

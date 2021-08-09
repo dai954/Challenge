@@ -12,12 +12,13 @@ class BaseTabBarController: UITabBarController {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9410743117, green: 0.9412353635, blue: 0.9410640597, alpha: 1)
         
+        let teamController = createNavigationController(viewController: UIViewController(), imageName: "apps", title: "チーム")
         
         let searchController = createNavigationController(viewController: BaseSearchController(), imageName: "search", title: "チーム検索")
         
-        let sampleNavController2 = createNavigationController(viewController: UIViewController(), imageName: "apps", title: "チーム")
+        let myDataController = createNavigationController(viewController: UIViewController(), imageName: "apps", title: "マイデータ")
         
-        viewControllers = [searchController, sampleNavController2]
+        viewControllers = [teamController ,searchController, myDataController]
         
     }
     

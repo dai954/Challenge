@@ -160,13 +160,14 @@ class DropDownFloatingView: UIView, DismissDetailSearch {
     
 }
 
-protocol DismissDetailSearch {
+
+protocol DismissDetailSearch: AnyObject {
     func dismissDetailSearchView()
 }
 
 class BlindView: UIView {
     
-    var delegate: DismissDetailSearch!
+    weak var delegate: DismissDetailSearch?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -177,7 +178,7 @@ class BlindView: UIView {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.delegate.dismissDetailSearchView()
+        delegate?.dismissDetailSearchView()
     }
     
     required init?(coder: NSCoder) {

@@ -16,7 +16,7 @@ class SearchResultController: BaseListController, UICollectionViewDelegateFlowLa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        For third VC, it should be set here.
+//        For next VC, it should be set here.
         if #available(iOS 14.0, *) {
           navigationItem.backButtonDisplayMode = .minimal
         }
@@ -113,6 +113,7 @@ class SearchResultController: BaseListController, UICollectionViewDelegateFlowLa
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let appId = String(apps[indexPath.item].trackId)
         let detailViewController = DetailViewController(appId: appId)
+        detailViewController.navigationItem.title = "\(searchTerm)"
         navigationController?.pushViewController(detailViewController, animated: true)
     }
     

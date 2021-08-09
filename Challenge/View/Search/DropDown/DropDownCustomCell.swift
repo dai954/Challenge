@@ -9,12 +9,6 @@ import UIKit
 
 class CustomCellForTextField: UITableViewCell {
     
-//    let topBorder: UIView = {
-//        let border = UIView()
-//        border.backgroundColor = .lightGray
-//        return border
-//    }()
-    
     let keywordLabel: UILabel = {
         let label = UILabel()
         label.text = "キーワード"
@@ -39,13 +33,11 @@ class CustomCellForTextField: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-//        addSubview(topBorder)
         addSubview(keywordLabel)
         addSubview(separateLabel)
         addSubview(textField)
         contentView.removeFromSuperview()
         
-//        topBorder.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, size: .init(width: 0, height: 0.3))
         keywordLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: nil,padding: .init(top: 8, left: 8, bottom: 8, right: 0), size: .init(width: 112, height: 0))
         separateLabel.anchor(top: keywordLabel.topAnchor, leading: keywordLabel.trailingAnchor, bottom: keywordLabel.bottomAnchor,trailing: nil, size: .init(width: 8, height: 0))
         textField.anchor(top: separateLabel.topAnchor, leading: separateLabel.trailingAnchor, bottom: separateLabel.bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 8, bottom: 0, right: 0))

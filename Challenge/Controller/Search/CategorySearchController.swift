@@ -46,13 +46,13 @@ class CategorySearchController: BaseListController, UICollectionViewDelegateFlow
     
     }
     
-    let spacing: CGFloat = 10
+    static let spacing: CGFloat = 10
     
-    static let cellHeight: CGFloat = 64
+    static let cellHeight: CGFloat = 70
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return .init(width: view.frame.width / 2 - spacing / 2, height: CategorySearchController.cellHeight)
+        return .init(width: view.frame.width / 2 - CategorySearchController.spacing / 2, height: CategorySearchController.cellHeight)
         
     }
     

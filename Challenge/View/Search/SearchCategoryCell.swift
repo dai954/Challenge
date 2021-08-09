@@ -21,8 +21,7 @@ class SearchCategoryCell: UICollectionViewCell {
     let categoryImage: UIImageView = {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "garden")
-        image.widthAnchor.constraint(equalToConstant: 64).isActive = true
-        image.heightAnchor.constraint(equalToConstant: 64).isActive = true
+        image.widthAnchor.constraint(equalToConstant: 70).isActive = true
         return image
     }()
     
