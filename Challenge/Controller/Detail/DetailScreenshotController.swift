@@ -9,7 +9,7 @@ import UIKit
 
 class DetailScreenshotController: BaseListController, UICollectionViewDelegateFlowLayout {
     
-    let cellId = "cellId"
+    fileprivate let cellId = "cellId"
     
     var screenshotUrls: [String]? {
         didSet {

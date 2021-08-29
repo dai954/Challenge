@@ -18,7 +18,7 @@ class BaseTabBarController: UITabBarController {
         
         let myDataController = createNavigationController(viewController: UIViewController(), imageName: "apps", title: "マイデータ")
         
-        viewControllers = [teamController ,searchController, myDataController]
+        viewControllers = [searchController, teamController, myDataController]
         
     }
     

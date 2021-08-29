@@ -9,8 +9,8 @@ import UIKit
 
 class CategorySearchController: BaseListController, UICollectionViewDelegateFlowLayout {
     
-    let cellId = "cellId"
-    let footerCellId = "footerCellId"
+    fileprivate let cellId = "cellId"
+    fileprivate let footerCellId = "footerCellId"
     
     static let labelData = ["Apple Watch", "体重管理", "食事記録", "トレーニング", "歩く", "ウォーキングリレー", "糖尿病改善", "フレイル予防", "ランニング", "早起き", "睡眠をとる", "マインドフルネス", "勉強", "健康・美容", "家事・仕事", "趣味・創作", "みんチャレ初心者"]
     

@@ -9,11 +9,11 @@ import UIKit
 
 class BaseSearchController: BaseListController, UICollectionViewDelegateFlowLayout {
     
-    let firstCellId = "firstCellId"
-    let secondCellId = "secondCellId"
-    let thirdCellId = "thirdCellId"
+    fileprivate let firstCellId = "firstCellId"
+    fileprivate let secondCellId = "secondCellId"
+    fileprivate let thirdCellId = "thirdCellId"
     
-    let searchBarView = UISearchBar()
+    fileprivate let searchBarView = UISearchBar()
     
     override func viewDidLoad() {
         super.viewDidLoad()

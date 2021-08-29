@@ -98,7 +98,7 @@ class DropDownFloatingView: UIView, DismissDetailSearch {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         let floatingPosition: CGFloat = floatingViewPosition - safeAreaTop - detailSearchViewHeight
-        print("floatingPosition",floatingPosition)
+//        print("floatingPosition",floatingPosition)
         
         if isOpen == false {
             isOpen = true

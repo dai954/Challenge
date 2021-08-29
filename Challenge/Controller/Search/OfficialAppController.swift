@@ -10,7 +10,7 @@ import SDWebImage
 
 class OfficialAppController: BaseListController, UICollectionViewDelegateFlowLayout {
     
-    let cellId = "cellId"
+    fileprivate let cellId = "cellId"
     
     var apps: [Result]? {
         didSet {
@@ -42,7 +42,7 @@ class OfficialAppController: BaseListController, UICollectionViewDelegateFlowLay
         return cell
     }
     
-    let spacing: CGFloat = 10
+    fileprivate let spacing: CGFloat = 10
     static let cellHeight: CGFloat = 100
     static let insetWidth: CGFloat = 16
     

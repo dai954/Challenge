@@ -8,10 +8,10 @@
 import UIKit
 
 class TagSearchController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
-    let cellId = "cellId"
-    let headerId = "headerId"
+    fileprivate let cellId = "cellId"
+    fileprivate let headerId = "headerId"
     
-    let searchBar = UISearchBar()
+    fileprivate let searchBar = UISearchBar()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,10 +29,10 @@ class TagSearchController: UICollectionViewController, UICollectionViewDelegateF
         searchBar.textField?.backgroundColor = .white
         searchBar.tintColor = .lightGray
 
+        searchBar.delegate = self
         searchBar.placeholder = "キーワードを入力してください"
         searchBar.becomeFirstResponder()
         
-        print(UICollectionView.elementKindSectionHeader)
         collectionView.register(TagHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.contentInset = .init(top: 0, left: 10, bottom: 10, right: 10)
@@ -43,6 +43,7 @@ class TagSearchController: UICollectionViewController, UICollectionViewDelegateF
                 tapGesture.cancelsTouchesInView = false
                 view.addGestureRecognizer(tapGesture)
     }
+
     
     @objc public func dismissKeyboard() {
             searchBar.endEditing(true)
@@ -71,6 +72,12 @@ class TagSearchController: UICollectionViewController, UICollectionViewDelegateF
     var tagItems4: [String] = [
         "絵", "読書", "ゲーム", "ブログ", "音楽", "執筆"
     ]
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("searchBar", searchBar.text!)
+        let searchTerm = searchBar.text!
+        searchAndPushsearchResultController(searchTerm: searchTerm)
+    }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let headerCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! TagHeader
@@ -107,7 +114,6 @@ class TagSearchController: UICollectionViewController, UICollectionViewDelegateF
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let searchResultController = SearchResultController()
         
         var searchTerm = ""
         switch indexPath.section {
@@ -117,18 +123,23 @@ class TagSearchController: UICollectionViewController, UICollectionViewDelegateF
         case 3: searchTerm = tagItems3[indexPath.item]
         default: searchTerm = tagItems4[indexPath.item]
         }
-        searchResultController.searchTerm = searchTerm
-        searchResultController.navigationItem.title = "【\(searchTerm)】"
-        self.navigationController?.pushViewController(searchResultController, animated: true)
+        
+        searchAndPushsearchResultController(searchTerm: searchTerm)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .init(top: 0, left: 0, bottom: 20, right: 0)
+        return .init(top: 0, left: 0, bottom: 16, right: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return .init(width: view.frame.width, height: 30)
     }
     
+    func searchAndPushsearchResultController(searchTerm: String) {
+        let searchResultController = SearchResultController()
+        searchResultController.searchTerm = searchTerm
+        searchResultController.navigationItem.title = "【\(searchTerm)】"
+        self.navigationController?.pushViewController(searchResultController, animated: true)
+    }
     
 }

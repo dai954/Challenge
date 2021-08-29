@@ -10,7 +10,7 @@ import UIKit
 class SearchResultController: BaseListController, UICollectionViewDelegateFlowLayout {
     
 
-    let cellId = "cellId"
+    fileprivate let cellId = "cellId"
     var dropDownFloatingView = DropDownFloatingView()
     var searchTerm = ""
     
@@ -120,13 +120,13 @@ class SearchResultController: BaseListController, UICollectionViewDelegateFlowLa
     
     //MARK: - Controll TopFloatingView
 
-    let detailSearchViewHeight: CGFloat = 42
-    var count = 0
-    var firstScrollViewPosition: CGFloat = 0
-    var savePoint: CGFloat = 0
-    var turnAroundPoint: CGFloat = 0
-    var flag1 = true
-    var flag2 = true
+    fileprivate let detailSearchViewHeight: CGFloat = 42
+    fileprivate var count = 0
+    fileprivate var firstScrollViewPosition: CGFloat = 0
+    fileprivate var savePoint: CGFloat = 0
+    fileprivate var turnAroundPoint: CGFloat = 0
+    fileprivate var flag1 = true
+    fileprivate var flag2 = true
 
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {

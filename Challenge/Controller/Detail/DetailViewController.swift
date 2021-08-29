@@ -21,16 +21,16 @@ class DetailViewController: BaseListController, UICollectionViewDelegateFlowLayo
         fatalError("init(coder:) has not been implemented")
     }
     
-    let cellId0 = "cellId0"
-    let cellId1 = "cellId1"
-    let cellId2 = "cellId2"
-    let cellId3 = "cellId3"
-    let cellId4 = "cellId4"
-    let cellId4PlusQButton = "cellId4PlusPlusQButton"
-    let cellId4PlusIcon = "cellId4PlusPlusIcon"
-    let cellId5 = "cellId5"
-    let cellId6 = "cellId6"
-    let cellId = "cellId4Plus"
+    fileprivate let cellId0 = "cellId0"
+    fileprivate let cellId1 = "cellId1"
+    fileprivate let cellId2 = "cellId2"
+    fileprivate let cellId3 = "cellId3"
+    fileprivate let cellId4 = "cellId4"
+    fileprivate let cellId4PlusQButton = "cellId4PlusPlusQButton"
+    fileprivate let cellId4PlusIcon = "cellId4PlusPlusIcon"
+    fileprivate let cellId5 = "cellId5"
+    fileprivate let cellId6 = "cellId6"
+    fileprivate let cellId = "cellId4Plus"
     
     let bottomView = BottomView()
     
@@ -180,7 +180,7 @@ class DetailViewController: BaseListController, UICollectionViewDelegateFlowLayo
     }
     
     
-    var countFired: CGFloat = 0
+    fileprivate var count: CGFloat = 0
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 
         if indexPath.item == 1 {
@@ -188,14 +188,14 @@ class DetailViewController: BaseListController, UICollectionViewDelegateFlowLayo
             let rateRound = round(rate * 100) / 100
             let cell1 = cell as! AchievementRateCell
             let timer = Timer.scheduledTimer(withTimeInterval: 0.005, repeats: true) { timer in
-                self.countFired += 1
+                self.count += 1
                 DispatchQueue.main.async {
-                    cell1.progress = min(0.01 * self.countFired, rateRound)
-                    cell1.circleProgressView.progress = min(0.01 * self.countFired, rateRound)
+                    cell1.progress = min(0.01 * self.count, rateRound)
+                    cell1.circleProgressView.progress = min(0.01 * self.count, rateRound)
 
                     if cell1.circleProgressView.progress == rateRound {
                         timer.invalidate()
-                        self.countFired = 0
+                        self.count = 0
                     }
                 }
             }
